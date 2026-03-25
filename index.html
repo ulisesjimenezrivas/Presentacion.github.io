@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de Autodiagnóstico Energético</title>
+<style>
+  :root {
+    --navy: #0A1628;
+    --navyMid: #122040;
+    --blue: #1A3A6B;
+    --accent: #F5A623;
+    --accentLight: #FFC85A;
+    --white: #FFFFFF;
+    --offWhite: #F4F6FA;
+    --gray: #8A9BB0;
+    --lightGray: #D8E0EC;
+    --green: #27AE60;
+    --red: #E74C3C;
+    --teal: #0D9488;
+    --purple: #7C3AED;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--navy); color: var(--white); overflow: hidden; height: 100vh; }
+
+  /* ─── PROGRESS BAR ─── */
+  #progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: var(--accent); transition: width 0.3s ease; z-index: 100; }
+
+  /* ─── SECTION INDICATOR ─── */
+  #section-nav {
+    position: fixed; top: 12px; right: 16px; display: flex; gap: 6px; z-index: 99;
+  }
+  .sec-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.25); cursor: pointer;
+    transition: background 0.25s, transform 0.25s;
+  }
+  .sec-dot.active { background: var(--accent); transform: scale(1.3); }
+
+  /* ─── SLIDE CONTAINER ─── */
+  #slides { width: 100vw; height: 100vh; position: relative; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; transform: translateY(0); pointer-events: all; }
+  .slide.out { opacity: 0; transform: translateY(-20px); }
+
+  /* ─── SLIDE TYPES ─── */
+  .slide-dark { background: var(--navy); }
+  .slide-light { background: var(--offWhite); color: var(--navy); }
+  .slide-accent { background: var(--accent); color: var(--navy); }
+  .slide-teal { background: #0e5a4f; }
+
+  /* ─── NAVIGATION ─── */
+  #nav {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px; z-index: 99;
+    background: rgba(10,22,40,0.85); padding: 8px 20px; border-radius: 30px;
+    backdrop-filter: blur(8px); border: 1px solid rgba(245,166,35,0.2);
+  }
+  .nav-btn {
+    background: none; border: 1.5px solid rgba(245,166,35,0.5); color: var(--accent);
+    padding: 6px 18px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600;
+    transition: all 0.2s; letter-spacing: 0.5px;
+  }
+  .nav-btn:hover { background: var(--accent); color: var(--navy); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  #slide-counter { font-size: 12px; color: var(--gray); min-width: 60px; text-align: center; }
+
+  /* ─── SLIDE PADDING ─── */
+  .slide-content { padding: 40px 60px; flex: 1; display: flex; flex-direction: column; }
+  .slide-eyebrow { font-size: 10px; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+  .slide-title { font-size: 34px; font-weight: 700; line-height: 1.15; margin-bottom: 28px; }
+  .slide-title-lg { font-size: 52px; font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+  .slide-light .slide-title { color: var(--navy); }
+  .slide-light .slide-eyebrow { color: var(--blue); }
+
+  /* ─── CARD GRID ─── */
+  .card-grid { display: grid; gap: 14px; flex: 1; align-items: stretch; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--navyMid); border-radius: 10px; padding: 20px 18px;
+    border-top: 3px solid var(--accent); position: relative; overflow: hidden;
+  }
+  .card.teal { border-top-color: var(--teal); }
+  .card.purple { border-top-color: var(--purple); }
+  .card.green { border-top-color: var(--green); }
+  .card.red { border-top-color: var(--red); }
+  .slide-light .card { background: #E8EFF8; color: var(--navy); }
+  .card-icon { font-size: 26px; margin-bottom: 10px; }
+  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .card-body { font-size: 12px; color: var(--lightGray); line-height: 1.5; }
+  .slide-light .card-body { color: #556; }
+  .card-num { font-size: 28px; font-weight: 800; color: var(--accent); margin-bottom: 6px; }
+  .card.teal .card-num { color: var(--teal); }
+  .card.green .card-num { color: var(--green); }
+
+  /* ─── DEFINITION BOX ─── */
+  .def-box {
+    border-left: 5px solid var(--accent); background: var(--blue);
+    padding: 18px 22px; border-radius: 0 8px 8px 0; margin-bottom: 24px;
+    font-style: italic; font-size: 16px; line-height: 1.6;
+  }
+  .slide-light .def-box { background: #dce8f8; color: var(--navy); }
+
+  /* ─── FORMULA BOX ─── */
+  .formula-box {
+    background: var(--blue); border-top: 4px solid var(--accent);
+    border-radius: 8px; padding: 20px; text-align: center;
+    font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 20px;
+  }
+
+  /* ─── STEP ITEMS ─── */
+  .step-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+  .step-item {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.07); border-radius: 8px; padding: 12px 16px;
+  }
+  .step-num {
+    width: 30px; height: 30px; background: var(--accent); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: var(--navy); flex-shrink: 0;
+  }
+  .slide-teal .step-item { background: rgba(255,255,255,0.1); }
+  .step-text { font-size: 14px; }
+
+  /* ─── TABLE MOCK ─── */
+  .mock-table { border-collapse: collapse; width: 100%; border-radius: 8px; overflow: hidden; font-size: 12px; }
+  .mock-table th { background: var(--navy); color: var(--white); padding: 8px 10px; text-align: left; font-size: 11px; }
+  .mock-table td { padding: 8px 10px; border-bottom: 1px solid #cdd6e0; }
+  .mock-table tr:nth-child(even) td { background: #EDF2FA; }
+  .mock-table tr:nth-child(odd) td { background: var(--white); }
+  .mock-table tr:hover td { background: #dbe5f5; }
+
+  /* ─── PRACTICE SLIDE ─── */
+  .practice-header {
+    display: inline-block; background: rgba(0,0,0,0.2); border-radius: 20px;
+    padding: 4px 16px; font-size: 11px; letter-spacing: 3px;
+    font-weight: 700; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .timer-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0,0,0,0.2); border-radius: 20px; padding: 6px 16px;
+    font-size: 14px; font-weight: 700; margin-bottom: 24px; color: var(--accentLight);
+  }
+  .slide-teal .timer-badge { color: #a3f0e0; }
+
+  /* ─── RULE BAR ─── */
+  .rule-bar {
+    background: var(--navyMid); border-radius: 8px; padding: 12px 18px;
+    font-size: 12px; color: var(--accentLight); text-align: center; margin-top: 16px;
+  }
+
+  /* ─── COVER SLIDE ─── */
+  .cover-accent-bar { width: 8px; background: var(--accent); position: absolute; left: 0; top: 0; bottom: 0; }
+  .tagline-pill {
+    display: inline-block; background: var(--accent); color: var(--navy);
+    font-weight: 700; padding: 8px 22px; border-radius: 6px; font-size: 13px;
+    margin-top: 20px;
+  }
+  .cover-body { padding: 50px 70px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .cover-title { font-size: 60px; font-weight: 800; line-height: 1.05; color: var(--white); }
+  .cover-title span { color: var(--accent); }
+  .cover-geo {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 40%;
+    background: var(--navyMid); clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+    pointer-events: none;
+  }
+  .cover-geo2 {
+    position: absolute; right: 5%; bottom: 0; width: 35%; height: 60%;
+    background: var(--blue); clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  /* ─── CLOSING SLIDE ─── */
+  .closing-quote { font-size: 38px; font-weight: 800; line-height: 1.2; }
+  .closing-quote .accent { color: var(--accent); }
+
+  /* ─── REPORT ITEMS ─── */
+  .report-item {
+    display: flex; align-items: stretch; gap: 0;
+    background: var(--navyMid); border-radius: 8px; overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .report-accent { width: 6px; background: var(--accent); flex-shrink: 0; }
+  .report-accent.teal { background: var(--teal); }
+  .report-accent.purple { background: var(--purple); }
+  .report-accent.green { background: var(--green); }
+  .report-body { padding: 12px 16px; flex: 1; }
+  .report-num { font-size: 20px; font-weight: 800; color: var(--accent); display: inline-block; margin-right: 8px; }
+  .report-title { font-size: 14px; font-weight: 700; display: inline; }
+  .report-sub { font-size: 11px; color: var(--lightGray); margin-top: 4px; }
+
+  /* ─── TWO-COL CLOSE ─── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+  .col-card { border-radius: 10px; padding: 20px; }
+  .col-card.light { background: #EFF6FF; color: var(--navy); }
+  .col-card.dark-col { background: var(--navyMid); }
+  .col-card-title { font-weight: 800; font-size: 16px; margin-bottom: 14px; }
+  .col-card.dark-col .col-card-title { color: var(--accent); }
+  .col-card.light .col-card-title { color: var(--teal); }
+  .col-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; }
+  .col-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .col-card.light .col-dot { background: var(--teal); }
+
+  /* ─── EXAMPLE GRID ─── */
+  .ex-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .ex-card {
+    background: var(--navyMid); border-radius: 8px; padding: 12px;
+    border-top: 3px solid var(--accent); text-align: center;
+  }
+  .ex-val { font-size: 20px; font-weight: 800; color: var(--accent); }
+  .ex-card.teal .ex-val { color: var(--teal); }
+  .ex-card.gray .ex-val { color: var(--gray); }
+  .ex-card.green .ex-val { color: var(--green); }
+  .ex-card.teal { border-top-color: var(--teal); }
+  .ex-card.gray { border-top-color: var(--gray); }
+  .ex-card.green { border-top-color: var(--green); }
+  .ex-label { font-size: 10px; color: var(--lightGray); margin-top: 4px; }
+
+  /* ─── EQUIPOS GRID ─── */
+  .eq-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; flex: 1; }
+  .eq-card {
+    background: var(--navyMid); border-radius: 8px; padding: 14px 12px;
+    border-top: 3px solid; text-align: center;
+  }
+  .eq-icon { font-size: 22px; margin-bottom: 6px; }
+  .eq-name { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
+  .eq-desc { font-size: 10px; color: var(--lightGray); line-height: 1.4; }
+
+  /* ─── FIELD COLUMNS (light slide) ─── */
+  .field-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; flex: 1; }
+  .field-col { border-radius: 10px; padding: 16px; border-top: 4px solid; }
+  .field-col.ilum { background: #FFF8EC; border-top-color: var(--accent); color: var(--navy); }
+  .field-col.aire { background: #EFF6FF; border-top-color: #3B82F6; color: var(--navy); }
+  .field-col.elec { background: #F5F3FF; border-top-color: var(--purple); color: var(--navy); }
+  .field-col-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; }
+  .field-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; }
+  .field-dot { width: 6px; height: 24px; border-radius: 3px; flex-shrink: 0; }
+  .ilum .field-dot { background: var(--accent); }
+  .aire .field-dot { background: #3B82F6; }
+  .elec .field-dot { background: var(--purple); }
+
+  /* ─── ALERT/OPP SPLIT ─── */
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex: 1; }
+  .split-card { border-radius: 10px; padding: 18px; }
+  .split-card.warn { background: #FFF7ED; }
+  .split-card.good { background: #F0FDF4; }
+  .split-title { font-size: 15px; font-weight: 800; margin-bottom: 14px; }
+  .split-card.warn .split-title { color: var(--red); }
+  .split-card.good .split-title { color: var(--green); }
+  .split-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; color: var(--navy); }
+  .split-bar { width: 6px; height: 22px; border-radius: 3px; flex-shrink: 0; }
+  .split-card.warn .split-bar { background: var(--red); }
+  .split-card.good .split-bar { background: var(--green); }
+
+  /* ─── KEYBOARD NAV ─── */
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0.6); }
+    50% { box-shadow: 0 0 0 5px rgba(245,166,35,0); }
+  }
+  .sec-dot.active { animation: pulse-dot 2s infinite; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="section-nav"></div>
+
+<div id="slides">
+
+  <!-- SLIDE 1: PORTADA -->
+  <div class="slide slide-dark active" data-section="Apertura">
+    <div class="cover-accent-bar"></div>
+    <div class="cover-geo"></div>
+    <div class="cover-geo2"></div>
+    <div class="cover-body">
+      <div class="slide-eyebrow" style="color:var(--accent);letter-spacing:3px;font-size:10px;margin-bottom:14px;">⚡ MINISTERIO DE ENERGÍA Y MINAS · MEM</div>
+      <div class="cover-title">
+        Taller de<br><span>Autodiagnós</span><span>tico</span><br>Energético
+      </div>
+      <div class="tagline-pill">"Esto no es una clase. Es entrenamiento."</div>
+      <div style="margin-top:18px;font-size:13px;color:var(--gray);font-style:italic;">⏱ 45 – 60 minutos</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: QUÉ VAMOS A HACER -->
+  <div class="slide slide-light" data-section="Apertura">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Apertura · 15 min</div>
+      <div class="slide-title">¿Qué vamos a hacer hoy?</div>
+      <div class="card-grid g4" style="flex:1">
+        <div class="card">
+          <div class="card-icon">🔧</div>
+          <div class="card-title">Medir en campo</div>
+          <div class="card-body">Usaremos equipos reales para medir iluminación, aires acondicionados y más</div>
+        </div>
+        <div class="card teal">
+          <div class="card-icon">📋</div>
+          <div class="card-title">Llenar la plantilla</div>
+          <div class="card-body">Un formato simple en Excel. Nada complicado, todo paso a paso</div>
+        </div>
+        <div class="card purple">
+          <div class="card-icon">📊</div>
+          <div class="card-title">Calcular consumo</div>
+          <div class="card-body">Sabremos cuánto gasta cada equipo al día, mes y año en RD$</div>
+        </div>
+        <div class="card green">
+          <div class="card-icon">💡</div>
+          <div class="card-title">Dar recomendaciones</div>
+          <div class="card-body">Identificaremos qué se puede mejorar y cómo comunicarlo claramente</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: QUÉ ES UNA AUDITORÍA -->
+  <div class="slide slide-dark" data-section="Apertura">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Apertura</div>
+      <div class="slide-title">¿Qué es una auditoría energética?</div>
+      <div class="def-box">
+        Es revisar cómo usas la energía en tu empresa para encontrar dónde se desperdicia y cómo ahorrar.
+      </div>
+      <div class="card-grid g3" style="flex:1">
+        <div class="card green">
+          <div class="card-num">01</div>
+          <div class="card-title">🌿 Reducir consumo</div>
+          <div class="card-body">Menos kWh = menos dinero gastado cada mes</div>
+        </div>
+        <div class="card">
+          <div class="card-num" style="color:var(--accent)">02</div>
+          <div class="card-title">⚠️ Detectar desperdicios</div>
+          <div class="card-body">Equipos prendidos sin necesidad, uso fuera de horario</div>
+        </div>
+        <div class="card teal">
+          <div class="card-num">03</div>
+          <div class="card-title">⚖️ Cumplir la ley</div>
+          <div class="card-body">Decreto 153-23 (República Dominicana)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: QUÉ SE LEVANTA EN CAMPO -->
+  <div class="slide slide-light" data-section="Campo">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Bloque 1 · Levantamiento en campo</div>
+      <div class="slide-title">¿Qué se levanta en campo?</div>
+      <div class="field-cols">
+        <div class="field-col ilum">
+          <div class="field-col-title">💡 Iluminación</div>
+          <div class="field-item"><div class="field-dot"></div>Área de trabajo</div>
+          <div class="field-item"><div class="field-dot"></div>Tipo de luminaria</div>
+          <div class="field-item"><div class="field-dot"></div>Voltaje y amperaje</div>
+          <div class="field-item"><div class="field-dot"></div>Potencia (W)</div>
+          <div class="field-item"><div class="field-dot"></div>Nivel de luz (lux)</div>
+          <div class="field-item"><div class="field-dot"></div>Horas de uso al día</div>
+        </div>
+        <div class="field-col aire">
+          <div class="field-col-title">❄️ Aires acondicionados</div>
+          <div class="field-item"><div class="field-dot"></div>Área de trabajo</div>
+          <div class="field-item"><div class="field-dot"></div>Marca y modelo</div>
+          <div class="field-item"><div class="field-dot"></div>Tipo de refrigerante</div>
+          <div class="field-item"><div class="field-dot"></div>Eficiencia (SEER/EER)</div>
+          <div class="field-item"><div class="field-dot"></div>Potencia y voltaje</div>
+          <div class="field-item"><div class="field-dot"></div>Temperatura de ajuste</div>
+          <div class="field-item"><div class="field-dot"></div>Horas de uso</div>
+        </div>
+        <div class="field-col elec">
+          <div class="field-col-title">🖥️ Equipos eléctricos</div>
+          <div class="field-item"><div class="field-dot"></div>Área de uso</div>
+          <div class="field-item"><div class="field-dot"></div>Tipo de equipo</div>
+          <div class="field-item"><div class="field-dot"></div>Voltaje y amperaje</div>
+          <div class="field-item"><div class="field-dot"></div>Potencia (W)</div>
+          <div class="field-item"><div class="field-dot"></div>Cantidad de equipos</div>
+          <div class="field-item"><div class="field-dot"></div>Horas de uso al día</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: EQUIPOS DE MEDICIÓN -->
+  <div class="slide slide-dark" data-section="Campo">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Bloque 1 · Equipos de medición</div>
+      <div class="slide-title">Los equipos que vamos a usar</div>
+      <div class="eq-grid">
+        <div class="eq-card" style="border-top-color:var(--accent)">
+          <div class="eq-icon">⚡</div>
+          <div class="eq-name" style="color:var(--accent)">Pinza amperimétrica</div>
+          <div class="eq-desc">Mide la corriente eléctrica (amperios) sin cortar el circuito</div>
+        </div>
+        <div class="eq-card" style="border-top-color:#FBBF24">
+          <div class="eq-icon">☀️</div>
+          <div class="eq-name" style="color:#FBBF24">Luxómetro</div>
+          <div class="eq-desc">Mide el nivel de iluminación (lux) en cualquier área</div>
+        </div>
+        <div class="eq-card" style="border-top-color:var(--teal)">
+          <div class="eq-icon">📈</div>
+          <div class="eq-name" style="color:var(--teal)">Analizador de red</div>
+          <div class="eq-desc">Mide voltaje, potencia y calidad de energía eléctrica</div>
+        </div>
+        <div class="eq-card" style="border-top-color:#6EE7B7">
+          <div class="eq-icon">💨</div>
+          <div class="eq-name" style="color:#6EE7B7">Anemómetro</div>
+          <div class="eq-desc">Mide la velocidad del aire (m/s) en climatización</div>
+        </div>
+        <div class="eq-card" style="border-top-color:#F87171">
+          <div class="eq-icon">🌡️</div>
+          <div class="eq-name" style="color:#F87171">Pirómetro</div>
+          <div class="eq-desc">Mide temperatura sin contacto (°C) en equipos y circuitos</div>
+        </div>
+        <div class="eq-card" style="border-top-color:#4ADE80">
+          <div class="eq-icon">🌿</div>
+          <div class="eq-name" style="color:#4ADE80">Medidor de CO₂</div>
+          <div class="eq-desc">Mide calidad del aire interior (ppm) en espacios cerrados</div>
+        </div>
+        <div class="eq-card" style="border-top-color:#93C5FD;grid-column:span 2">
+          <div class="eq-icon">📷</div>
+          <div class="eq-name" style="color:#93C5FD">Cámara termográfica</div>
+          <div class="eq-desc">Detecta puntos calientes en instalaciones eléctricas y mecánicas visualmente</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: PLANTILLA EXCEL -->
+  <div class="slide slide-light" data-section="Campo">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Bloque 1 · Plantilla Excel</div>
+      <div class="slide-title">¿Cómo se llena la plantilla?</div>
+      <table class="mock-table" style="margin-bottom:18px">
+        <thead>
+          <tr>
+            <th>Área</th><th>Equipo</th><th>Cantidad</th><th>Potencia (W)</th><th>Horas/día</th><th>Observaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Oficina 1</td><td>Lámpara LED</td><td>4</td><td>18 W</td><td>8 hrs</td><td>Buenas condiciones</td></tr>
+          <tr><td>Sala reuniones</td><td>A/C LG 18k</td><td>1</td><td>1,800 W</td><td>6 hrs</td><td>Revisar filtros</td></tr>
+          <tr><td>Recepción</td><td>Monitor LCD</td><td>2</td><td>25 W</td><td>9 hrs</td><td>Actualizar a LED</td></tr>
+          <tr><td>Oficina 2</td><td>CPU escritorio</td><td>3</td><td>120 W</td><td>8 hrs</td><td>Apagado automático</td></tr>
+        </tbody>
+      </table>
+      <div class="card-grid g3">
+        <div class="card" style="padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px">💡 Área</div>
+          <div class="card-body">Nombre del espacio (ej. Oficina 1, Sala de servidores)</div>
+        </div>
+        <div class="card teal" style="padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:4px">⚡ Potencia</div>
+          <div class="card-body">Encuéntrala en la etiqueta del equipo (ej. 18W, 1.8kW)</div>
+        </div>
+        <div class="card purple" style="padding:12px 14px">
+          <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:4px">⏱ Horas/día</div>
+          <div class="card-body">Cuántas horas al día está prendido ese equipo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: PRÁCTICA 1 -->
+  <div class="slide slide-accent" data-section="Campo">
+    <div class="slide-content" style="justify-content:center">
+      <div class="practice-header">⚡ Práctica 1</div>
+      <div class="slide-title-lg" style="color:var(--navy)">¡Hora de medir<br>en vivo!</div>
+      <div class="timer-badge" style="color:var(--navy);background:rgba(0,0,0,0.15)">⏱ 15 minutos</div>
+      <div class="step-list">
+        <div class="step-item" style="background:rgba(0,0,0,0.15)">
+          <div class="step-num">1</div>
+          <div class="step-text" style="color:var(--navy);font-weight:600">Formen grupos de 3–4 personas</div>
+        </div>
+        <div class="step-item" style="background:rgba(0,0,0,0.15)">
+          <div class="step-num">2</div>
+          <div class="step-text" style="color:var(--navy);font-weight:600">Tomen el caso de oficina simulado</div>
+        </div>
+        <div class="step-item" style="background:rgba(0,0,0,0.15)">
+          <div class="step-num">3</div>
+          <div class="step-text" style="color:var(--navy);font-weight:600">Levanten mínimo 5–10 equipos</div>
+        </div>
+        <div class="step-item" style="background:rgba(0,0,0,0.15)">
+          <div class="step-num">4</div>
+          <div class="step-text" style="color:var(--navy);font-weight:600">Llenen el formato: área, equipo, potencia, horas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: FÓRMULA CLAVE -->
+  <div class="slide slide-dark" data-section="Excel">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Bloque 2 · Excel</div>
+      <div class="slide-title">La fórmula que necesitas saber</div>
+      <div class="formula-box">
+        Consumo (kWh) = Potencia (W) × Horas de uso ÷ 1,000
+      </div>
+      <div style="margin-bottom:12px;font-size:13px;color:var(--gray);font-weight:600;">Ejemplo práctico:</div>
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-val">100 W</div>
+          <div class="ex-label">Lámpara</div>
+        </div>
+        <div class="ex-card teal">
+          <div class="ex-val">× 8 hrs</div>
+          <div class="ex-label">Horas de uso</div>
+        </div>
+        <div class="ex-card gray">
+          <div class="ex-val">÷ 1,000</div>
+          <div class="ex-label">Conversión</div>
+        </div>
+        <div class="ex-card green">
+          <div class="ex-val">0.8 kWh</div>
+          <div class="ex-label">Consumo al día</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;font-size:13px;color:var(--lightGray);background:var(--navyMid);padding:12px 16px;border-radius:8px;border-left:4px solid var(--accent)">
+        💡 Multiplica por 30 para el mes. Por 365 para el año. Por el costo del kWh para ver el impacto en RD$.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: EXCEL EN VIVO -->
+  <div class="slide slide-dark" data-section="Excel">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Bloque 2 · Excel</div>
+      <div class="slide-title">Del dato al resultado en Excel</div>
+      <div class="card-grid g3" style="flex:1">
+        <div class="card" style="position:relative">
+          <div style="width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--navy);margin-bottom:12px">1</div>
+          <div class="card-title" style="font-size:15px">Hoja de datos</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:12px;color:var(--lightGray);display:flex;align-items:center;gap:6px">→ Área, equipo, cantidad</div>
+            <div style="font-size:12px;color:var(--lightGray);display:flex;align-items:center;gap:6px">→ Potencia (W)</div>
+            <div style="font-size:12px;color:var(--lightGray);display:flex;align-items:center;gap:6px">→ Horas de uso</div>
+          </div>
+        </div>
+        <div class="card teal">
+          <div style="width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--white);margin-bottom:12px">2</div>
+          <div class="card-title" style="font-size:15px">Hoja de cálculos</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:12px;color:var(--lightGray)">→ Consumo día/mes/año</div>
+            <div style="font-size:12px;color:var(--lightGray)">→ Cargas críticas</div>
+            <div style="font-size:12px;color:var(--lightGray)">→ Impacto económico</div>
+          </div>
+        </div>
+        <div class="card green">
+          <div style="width:36px;height:36px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--white);margin-bottom:12px">3</div>
+          <div class="card-title" style="font-size:15px">Hoja de resultados</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
+            <div style="font-size:12px;color:var(--lightGray)">→ Resumen por categoría</div>
+            <div style="font-size:12px;color:var(--lightGray)">→ Top 3 consumidores</div>
+            <div style="font-size:12px;color:var(--lightGray)">→ Oportunidades de ahorro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: PRÁCTICA 2 -->
+  <div class="slide slide-teal" data-section="Excel">
+    <div class="slide-content" style="justify-content:center">
+      <div class="practice-header">⚡ Práctica 2</div>
+      <div class="slide-title-lg" style="color:var(--white)">¡A calcular<br>en Excel!</div>
+      <div class="timer-badge">⏱ 40 minutos</div>
+      <div class="card-grid g3">
+        <div class="card" style="background:rgba(255,255,255,0.1);border-top-color:#a3f0e0">
+          <div style="font-size:22px;font-weight:800;color:#a3f0e0;margin-bottom:6px">A</div>
+          <div class="card-body" style="color:var(--white);font-size:13px">Introduzcan los datos del levantamiento en la plantilla</div>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,0.1);border-top-color:#a3f0e0">
+          <div style="font-size:22px;font-weight:800;color:#a3f0e0;margin-bottom:6px">B</div>
+          <div class="card-body" style="color:var(--white);font-size:13px">Calculen el consumo total del área (kWh/mes)</div>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,0.1);border-top-color:#a3f0e0">
+          <div style="font-size:22px;font-weight:800;color:#a3f0e0;margin-bottom:6px">C</div>
+          <div class="card-body" style="color:var(--white);font-size:13px">Identifiquen los 3 equipos que más consumen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: QUÉ HAGO CON LOS RESULTADOS -->
+  <div class="slide slide-light" data-section="Análisis">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Bloque 3 · Análisis e interpretación</div>
+      <div class="slide-title">¿Qué hago con los resultados?</div>
+      <div class="split-grid">
+        <div class="split-card warn">
+          <div class="split-title">🚨 Señales de alerta</div>
+          <div class="split-item"><div class="split-bar"></div>Consume mucho y se usa poco</div>
+          <div class="split-item"><div class="split-bar"></div>Equipo viejo (más de 10 años)</div>
+          <div class="split-item"><div class="split-bar"></div>Temperatura del A/C muy baja sin necesidad</div>
+          <div class="split-item"><div class="split-bar"></div>Luces prendidas en áreas sin personas</div>
+        </div>
+        <div class="split-card good">
+          <div class="split-title">✅ Oportunidades de ahorro</div>
+          <div class="split-item"><div class="split-bar"></div>Cambiar lámparas a LED</div>
+          <div class="split-item"><div class="split-bar"></div>Ajustar A/C a 24°C (no a 18°C)</div>
+          <div class="split-item"><div class="split-bar"></div>Apagar equipos fuera del horario laboral</div>
+          <div class="split-item"><div class="split-bar"></div>Mantenimiento preventivo de equipos</div>
+        </div>
+      </div>
+      <div class="rule-bar">Regla simple: Si consume mucho y se usa poco → revisar. Si es viejo → candidato a cambio.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: MINI REPORTE -->
+  <div class="slide slide-dark" data-section="Reporte">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Bloque 4 · Mini reporte</div>
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:24px">
+        <div class="slide-title" style="margin:0">El mini reporte</div>
+        <div style="font-size:12px;color:var(--accent);font-style:italic">máx. 2 páginas</div>
+      </div>
+      <div class="report-item">
+        <div class="report-accent"></div>
+        <div class="report-body">
+          <span class="report-num">1</span><span class="report-title">Introducción</span>
+          <div class="report-sub">¿Qué empresa? ¿Qué área? ¿Cuándo se hizo el levantamiento?</div>
+        </div>
+      </div>
+      <div class="report-item">
+        <div class="report-accent teal"></div>
+        <div class="report-body">
+          <span class="report-num" style="color:var(--teal)">2</span><span class="report-title">Metodología</span>
+          <div class="report-sub">¿Qué se midió? ¿Qué equipos de medición se usaron?</div>
+        </div>
+      </div>
+      <div class="report-item">
+        <div class="report-accent purple"></div>
+        <div class="report-body">
+          <span class="report-num" style="color:var(--purple)">3</span><span class="report-title">Resultados</span>
+          <div class="report-sub">Consumo total, tabla de equipos, top 3 que más gastan</div>
+        </div>
+      </div>
+      <div class="report-item">
+        <div class="report-accent green"></div>
+        <div class="report-body">
+          <span class="report-num" style="color:var(--green)">4</span><span class="report-title">Recomendaciones</span>
+          <div class="report-sub">Acciones concretas ordenadas por prioridad y facilidad de implementación</div>
+        </div>
+      </div>
+      <div class="rule-bar" style="margin-top:14px">Claro, corto y útil. Nada más.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: AUTODIAGNÓSTICO vs AUDITORÍA -->
+  <div class="slide slide-light" data-section="Cierre">
+    <div class="slide-content">
+      <div class="slide-eyebrow">Cierre estratégico</div>
+      <div class="slide-title">Autodiagnóstico ≠ Auditoría completa</div>
+      <div class="two-col" style="flex:1">
+        <div class="col-card dark-col">
+          <div class="col-card-title">Lo que hiciste hoy</div>
+          <div class="col-item"><div class="col-dot"></div>Levantamiento de equipos reales</div>
+          <div class="col-item"><div class="col-dot"></div>Uso de equipos de medición</div>
+          <div class="col-item"><div class="col-dot"></div>Cálculo de consumo básico</div>
+          <div class="col-item"><div class="col-dot"></div>Mini reporte de resultados</div>
+        </div>
+        <div class="col-card light">
+          <div class="col-card-title">¿Qué sigue?</div>
+          <div class="col-item"><div class="col-dot"></div>Auditoría formal con más profundidad</div>
+          <div class="col-item"><div class="col-dot"></div>Soporte técnico del MEM</div>
+          <div class="col-item"><div class="col-dot"></div>Guía y seguimiento continuo</div>
+          <div class="col-item"><div class="col-dot"></div>Repetir cada ciclo → mejorar</div>
+        </div>
+      </div>
+      <div style="background:var(--navyMid);color:var(--lightGray);font-size:12px;text-align:center;padding:10px;border-radius:8px;margin-top:12px">
+        MEM estará con ustedes como soporte técnico, guía y seguimiento en cada paso del proceso.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: CIERRE -->
+  <div class="slide slide-dark" data-section="Cierre">
+    <div class="cover-accent-bar"></div>
+    <div class="cover-geo"></div>
+    <div class="cover-geo2"></div>
+    <div class="cover-body">
+      <div style="font-size:11px;color:var(--accent);letter-spacing:3px;font-weight:700;margin-bottom:16px;text-transform:uppercase">Mensaje final</div>
+      <div class="closing-quote">
+        "Lo importante no es<br>hacerlo perfecto.<br><span class="accent">Es hacerlo constante<br>y mejorando<br>cada vez."</span>
+      </div>
+      <div style="margin-top:32px;font-size:11px;color:var(--gray)">
+        Ministerio de Energía y Minas · MEM · República Dominicana
+      </div>
+    </div>
+  </div>
+
+</div><!-- end slides -->
+
+<!-- NAVIGATION -->
+<div id="nav">
+  <button class="nav-btn" id="btn-prev" onclick="prevSlide()" disabled>← Anterior</button>
+  <span id="slide-counter">1 / 14</span>
+  <button class="nav-btn" id="btn-next" onclick="nextSlide()">Siguiente →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  // Build section nav dots
+  const sections = [...new Set([...slides].map(s => s.dataset.section))];
+  const sectionFirstSlide = {};
+  slides.forEach((s, i) => {
+    if (sectionFirstSlide[s.dataset.section] === undefined) sectionFirstSlide[s.dataset.section] = i;
+  });
+  const nav = document.getElementById('section-nav');
+  sections.forEach(sec => {
+    const d = document.createElement('div');
+    d.className = 'sec-dot';
+    d.title = sec;
+    d.onclick = () => goTo(sectionFirstSlide[sec]);
+    nav.appendChild(d);
+  });
+
+  function updateUI() {
+    // Progress
+    document.getElementById('progress-bar').style.width = ((current + 1) / total * 100) + '%';
+    // Counter
+    document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + total;
+    // Buttons
+    document.getElementById('btn-prev').disabled = current === 0;
+    document.getElementById('btn-next').disabled = current === total - 1;
+    // Section dots
+    const curSection = slides[current].dataset.section;
+    document.querySelectorAll('.sec-dot').forEach((d, i) => {
+      d.classList.toggle('active', sections[i] === curSection);
+    });
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= total || n === current) return;
+    slides[current].classList.remove('active');
+    slides[current].classList.add('out');
+    setTimeout(() => slides[current].classList.remove('out'), 400);
+    current = n;
+    slides[current].classList.add('active');
+    updateUI();
+  }
+
+  function nextSlide() { goTo(current + 1); }
+  function prevSlide() { goTo(current - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') nextSlide();
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+  });
+
+  // Touch swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (dx < -50) nextSlide();
+    if (dx > 50) prevSlide();
+  });
+
+  updateUI();
+</script>
+</body>
+</html>
