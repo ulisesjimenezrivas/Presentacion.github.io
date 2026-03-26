@@ -73,10 +73,11 @@
   #slide-counter { font-size: 12px; color: var(--gray); min-width: 60px; text-align: center; }
 
   /* ─── SLIDE PADDING ─── */
-  .slide-content { padding: 40px 60px; flex: 1; display: flex; flex-direction: column; }
-  .slide-eyebrow { font-size: 10px; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
-  .slide-title { font-size: 34px; font-weight: 700; line-height: 1.15; margin-bottom: 28px; }
-  .slide-title-lg { font-size: 52px; font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+  .slide-content { padding: 36px 56px; flex: 1; display: flex; flex-direction: column; }
+  /* Eyebrow: small but bold+spaced — readable at 5m with letter-spacing */
+  .slide-eyebrow { font-size: 12px; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+  .slide-title { font-size: 38px; font-weight: 700; line-height: 1.1; margin-bottom: 22px; }
+  .slide-title-lg { font-size: 56px; font-weight: 700; line-height: 1.05; margin-bottom: 18px; }
   .slide-light .slide-title { color: var(--navy); }
   .slide-light .slide-eyebrow { color: var(--blue); }
 
@@ -87,55 +88,55 @@
   .g4 { grid-template-columns: repeat(4, 1fr); }
 
   .card {
-    background: var(--navyMid); border-radius: 10px; padding: 20px 18px;
-    border-top: 3px solid var(--accent); position: relative; overflow: hidden;
+    background: var(--navyMid); border-radius: 10px; padding: 22px 20px;
+    border-top: 4px solid var(--accent); position: relative; overflow: hidden;
   }
   .card.teal { border-top-color: var(--teal); }
   .card.purple { border-top-color: var(--purple); }
   .card.green { border-top-color: var(--green); }
   .card.red { border-top-color: var(--red); }
   .slide-light .card { background: #E8EFF8; color: var(--navy); }
-  .card-icon { font-size: 26px; margin-bottom: 10px; }
-  .card-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-  .card-body { font-size: 12px; color: var(--lightGray); line-height: 1.5; }
-  .slide-light .card-body { color: #556; }
-  .card-num { font-size: 28px; font-weight: 800; color: var(--accent); margin-bottom: 6px; }
+  .card-icon { font-size: 30px; margin-bottom: 12px; }
+  .card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .card-body { font-size: 15px; color: var(--lightGray); line-height: 1.5; }
+  .slide-light .card-body { color: #445; }
+  .card-num { font-size: 30px; font-weight: 800; color: var(--accent); margin-bottom: 8px; }
   .card.teal .card-num { color: var(--teal); }
   .card.green .card-num { color: var(--green); }
 
   /* ─── DEFINITION BOX ─── */
   .def-box {
-    border-left: 5px solid var(--accent); background: var(--blue);
-    padding: 18px 22px; border-radius: 0 8px 8px 0; margin-bottom: 24px;
-    font-style: italic; font-size: 16px; line-height: 1.6;
+    border-left: 6px solid var(--accent); background: var(--blue);
+    padding: 20px 24px; border-radius: 0 8px 8px 0; margin-bottom: 20px;
+    font-style: italic; font-size: 19px; line-height: 1.6; color: var(--white);
   }
   .slide-light .def-box { background: #dce8f8; color: var(--navy); }
 
   /* ─── FORMULA BOX ─── */
   .formula-box {
-    background: var(--blue); border-top: 4px solid var(--accent);
-    border-radius: 8px; padding: 20px; text-align: center;
-    font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 20px;
+    background: var(--blue); border-top: 5px solid var(--accent);
+    border-radius: 8px; padding: 22px; text-align: center;
+    font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 18px;
   }
 
   /* ─── STEP ITEMS ─── */
   .step-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
   .step-item {
-    display: flex; align-items: center; gap: 14px;
-    background: rgba(255,255,255,0.07); border-radius: 8px; padding: 12px 16px;
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(255,255,255,0.08); border-radius: 8px; padding: 14px 18px;
   }
   .step-num {
-    width: 30px; height: 30px; background: var(--accent); border-radius: 6px;
+    width: 34px; height: 34px; background: var(--accent); border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 14px; color: var(--navy); flex-shrink: 0;
+    font-weight: 800; font-size: 16px; color: var(--navy); flex-shrink: 0;
   }
   .slide-teal .step-item { background: rgba(255,255,255,0.1); }
-  .step-text { font-size: 14px; }
+  .step-text { font-size: 18px; }
 
   /* ─── TABLE MOCK ─── */
-  .mock-table { border-collapse: collapse; width: 100%; border-radius: 8px; overflow: hidden; font-size: 12px; }
-  .mock-table th { background: var(--navy); color: var(--white); padding: 8px 10px; text-align: left; font-size: 11px; }
-  .mock-table td { padding: 8px 10px; border-bottom: 1px solid #cdd6e0; }
+  .mock-table { border-collapse: collapse; width: 100%; border-radius: 8px; overflow: hidden; font-size: 15px; }
+  .mock-table th { background: var(--navy); color: var(--white); padding: 10px 12px; text-align: left; font-size: 14px; font-weight: 700; }
+  .mock-table td { padding: 10px 12px; border-bottom: 1px solid #cdd6e0; color: var(--navy); }
   .mock-table tr:nth-child(even) td { background: #EDF2FA; }
   .mock-table tr:nth-child(odd) td { background: var(--white); }
   .mock-table tr:hover td { background: #dbe5f5; }
@@ -143,31 +144,31 @@
   /* ─── PRACTICE SLIDE ─── */
   .practice-header {
     display: inline-block; background: rgba(0,0,0,0.2); border-radius: 20px;
-    padding: 4px 16px; font-size: 11px; letter-spacing: 3px;
+    padding: 5px 18px; font-size: 13px; letter-spacing: 3px;
     font-weight: 700; text-transform: uppercase; margin-bottom: 12px;
   }
   .timer-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(0,0,0,0.2); border-radius: 20px; padding: 6px 16px;
-    font-size: 14px; font-weight: 700; margin-bottom: 24px; color: var(--accentLight);
+    background: rgba(0,0,0,0.2); border-radius: 20px; padding: 7px 18px;
+    font-size: 18px; font-weight: 700; margin-bottom: 22px; color: var(--accentLight);
   }
   .slide-teal .timer-badge { color: #a3f0e0; }
 
   /* ─── RULE BAR ─── */
   .rule-bar {
-    background: var(--navyMid); border-radius: 8px; padding: 12px 18px;
-    font-size: 12px; color: var(--accentLight); text-align: center; margin-top: 16px;
+    background: var(--navy); border-radius: 0; padding: 10px 18px;
+    font-size: 14px; color: var(--accentLight); text-align: center; margin-top: 14px;
   }
 
   /* ─── COVER SLIDE ─── */
   .cover-accent-bar { width: 8px; background: var(--accent); position: absolute; left: 0; top: 0; bottom: 0; }
   .tagline-pill {
     display: inline-block; background: var(--accent); color: var(--navy);
-    font-weight: 700; padding: 8px 22px; border-radius: 6px; font-size: 13px;
-    margin-top: 20px;
+    font-weight: 700; padding: 11px 26px; border-radius: 6px; font-size: 17px;
+    margin-top: 22px;
   }
   .cover-body { padding: 50px 70px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .cover-title { font-size: 60px; font-weight: 800; line-height: 1.05; color: var(--white); }
+  .cover-title { font-size: 64px; font-weight: 800; line-height: 1.05; color: var(--white); }
   .cover-title span { color: var(--accent); }
   .cover-geo {
     position: absolute; right: 0; top: 0; bottom: 0; width: 40%;
@@ -180,84 +181,84 @@
   }
 
   /* ─── CLOSING SLIDE ─── */
-  .closing-quote { font-size: 38px; font-weight: 800; line-height: 1.2; }
+  .closing-quote { font-size: 42px; font-weight: 800; line-height: 1.2; }
   .closing-quote .accent { color: var(--accent); }
 
   /* ─── REPORT ITEMS ─── */
   .report-item {
     display: flex; align-items: stretch; gap: 0;
     background: var(--navyMid); border-radius: 8px; overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
-  .report-accent { width: 6px; background: var(--accent); flex-shrink: 0; }
+  .report-accent { width: 7px; background: var(--accent); flex-shrink: 0; }
   .report-accent.teal { background: var(--teal); }
   .report-accent.purple { background: var(--purple); }
   .report-accent.green { background: var(--green); }
-  .report-body { padding: 12px 16px; flex: 1; }
-  .report-num { font-size: 20px; font-weight: 800; color: var(--accent); display: inline-block; margin-right: 8px; }
-  .report-title { font-size: 14px; font-weight: 700; display: inline; }
-  .report-sub { font-size: 11px; color: var(--lightGray); margin-top: 4px; }
+  .report-body { padding: 14px 20px; flex: 1; }
+  .report-num { font-size: 24px; font-weight: 800; color: var(--accent); display: inline-block; margin-right: 8px; }
+  .report-title { font-size: 19px; font-weight: 700; display: inline; color: var(--white); }
+  .report-sub { font-size: 15px; color: var(--lightGray); margin-top: 5px; }
 
   /* ─── TWO-COL CLOSE ─── */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
-  .col-card { border-radius: 10px; padding: 20px; }
+  .col-card { border-radius: 10px; padding: 22px; }
   .col-card.light { background: #EFF6FF; color: var(--navy); }
   .col-card.dark-col { background: var(--navyMid); }
-  .col-card-title { font-weight: 800; font-size: 16px; margin-bottom: 14px; }
+  .col-card-title { font-weight: 800; font-size: 20px; margin-bottom: 16px; }
   .col-card.dark-col .col-card-title { color: var(--accent); }
   .col-card.light .col-card-title { color: var(--teal); }
-  .col-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; }
-  .col-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+  .col-item { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 17px; }
+  .col-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
   .col-card.light .col-dot { background: var(--teal); }
 
   /* ─── EXAMPLE GRID ─── */
-  .ex-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .ex-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .ex-card {
-    background: var(--navyMid); border-radius: 8px; padding: 12px;
-    border-top: 3px solid var(--accent); text-align: center;
+    background: var(--navyMid); border-radius: 8px; padding: 16px;
+    border-top: 4px solid var(--accent); text-align: center;
   }
-  .ex-val { font-size: 20px; font-weight: 800; color: var(--accent); }
+  .ex-val { font-size: 28px; font-weight: 800; color: var(--accent); }
   .ex-card.teal .ex-val { color: var(--teal); }
   .ex-card.gray .ex-val { color: var(--gray); }
   .ex-card.green .ex-val { color: var(--green); }
   .ex-card.teal { border-top-color: var(--teal); }
   .ex-card.gray { border-top-color: var(--gray); }
   .ex-card.green { border-top-color: var(--green); }
-  .ex-label { font-size: 10px; color: var(--lightGray); margin-top: 4px; }
+  .ex-label { font-size: 14px; color: var(--lightGray); margin-top: 6px; }
 
   /* ─── EQUIPOS GRID ─── */
-  .eq-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; flex: 1; }
+  .eq-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; flex: 1; }
   .eq-card {
-    background: var(--navyMid); border-radius: 8px; padding: 14px 12px;
-    border-top: 3px solid; text-align: center;
+    background: var(--navyMid); border-radius: 8px; padding: 16px 14px;
+    border-top: 4px solid; text-align: center;
   }
-  .eq-icon { font-size: 22px; margin-bottom: 6px; }
-  .eq-name { font-size: 11px; font-weight: 700; margin-bottom: 4px; }
-  .eq-desc { font-size: 10px; color: var(--lightGray); line-height: 1.4; }
+  .eq-icon { font-size: 28px; margin-bottom: 8px; }
+  .eq-name { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+  .eq-desc { font-size: 13px; color: var(--lightGray); line-height: 1.4; }
 
   /* ─── FIELD COLUMNS (light slide) ─── */
   .field-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; flex: 1; }
-  .field-col { border-radius: 10px; padding: 16px; border-top: 4px solid; }
+  .field-col { border-radius: 10px; padding: 18px; border-top: 5px solid; }
   .field-col.ilum { background: #FFF8EC; border-top-color: var(--accent); color: var(--navy); }
   .field-col.aire { background: #EFF6FF; border-top-color: #3B82F6; color: var(--navy); }
   .field-col.elec { background: #F5F3FF; border-top-color: var(--purple); color: var(--navy); }
-  .field-col-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; }
-  .field-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; }
-  .field-dot { width: 6px; height: 24px; border-radius: 3px; flex-shrink: 0; }
+  .field-col-title { font-size: 17px; font-weight: 800; margin-bottom: 14px; }
+  .field-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 15px; }
+  .field-dot { width: 6px; height: 26px; border-radius: 3px; flex-shrink: 0; }
   .ilum .field-dot { background: var(--accent); }
   .aire .field-dot { background: #3B82F6; }
   .elec .field-dot { background: var(--purple); }
 
   /* ─── ALERT/OPP SPLIT ─── */
   .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex: 1; }
-  .split-card { border-radius: 10px; padding: 18px; }
-  .split-card.warn { background: #FFF7ED; }
+  .split-card { border-radius: 10px; padding: 20px; }
+  .split-card.warn { background: #FFF3F3; }
   .split-card.good { background: #F0FDF4; }
-  .split-title { font-size: 15px; font-weight: 800; margin-bottom: 14px; }
+  .split-title { font-size: 19px; font-weight: 800; margin-bottom: 16px; }
   .split-card.warn .split-title { color: var(--red); }
   .split-card.good .split-title { color: var(--green); }
-  .split-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px; color: var(--navy); }
-  .split-bar { width: 6px; height: 22px; border-radius: 3px; flex-shrink: 0; }
+  .split-item { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 17px; color: var(--navy); font-weight: 500; }
+  .split-bar { width: 6px; height: 24px; border-radius: 3px; flex-shrink: 0; }
   .split-card.warn .split-bar { background: var(--red); }
   .split-card.good .split-bar { background: var(--green); }
 
@@ -282,12 +283,12 @@
     <div class="cover-geo"></div>
     <div class="cover-geo2"></div>
     <div class="cover-body">
-      <div class="slide-eyebrow" style="color:var(--accent);letter-spacing:3px;font-size:10px;margin-bottom:14px;">⚡ MINISTERIO DE ENERGÍA Y MINAS · MEM</div>
+      <div class="slide-eyebrow" style="color:var(--accent);letter-spacing:3px;font-size:13px;margin-bottom:14px;">⚡ MINISTERIO DE ENERGÍA Y MINAS · MEM</div>
       <div class="cover-title">
         Taller de<br><span>Autodiagnós</span><span>tico</span><br>Energético
       </div>
       <div class="tagline-pill">"Esto no es una clase. Es entrenamiento."</div>
-      <div style="margin-top:18px;font-size:13px;color:var(--gray);font-style:italic;">⏱ 45 – 60 minutos</div>
+      <div style="margin-top:18px;font-size:16px;color:var(--gray);font-style:italic;">⏱ 45 – 60 minutos</div>
     </div>
   </div>
 
@@ -451,16 +452,16 @@
         </tbody>
       </table>
       <div class="card-grid g3">
-        <div class="card" style="padding:12px 14px">
-          <div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px">💡 Área</div>
+        <div class="card" style="padding:14px 16px">
+          <div style="font-size:15px;font-weight:700;color:var(--accent);margin-bottom:6px">💡 Área</div>
           <div class="card-body">Nombre del espacio (ej. Oficina 1, Sala de servidores)</div>
         </div>
-        <div class="card teal" style="padding:12px 14px">
-          <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:4px">⚡ Potencia</div>
+        <div class="card teal" style="padding:14px 16px">
+          <div style="font-size:15px;font-weight:700;color:var(--teal);margin-bottom:6px">⚡ Potencia</div>
           <div class="card-body">Encuéntrala en la etiqueta del equipo (ej. 18W, 1.8kW)</div>
         </div>
-        <div class="card purple" style="padding:12px 14px">
-          <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:4px">⏱ Horas/día</div>
+        <div class="card purple" style="padding:14px 16px">
+          <div style="font-size:15px;font-weight:700;color:var(--purple);margin-bottom:6px">⏱ Horas/día</div>
           <div class="card-body">Cuántas horas al día está prendido ese equipo</div>
         </div>
       </div>
@@ -502,7 +503,7 @@
       <div class="formula-box">
         Consumo (kWh) = Potencia (W) × Horas de uso ÷ 1,000
       </div>
-      <div style="margin-bottom:12px;font-size:13px;color:var(--gray);font-weight:600;">Ejemplo práctico:</div>
+      <div style="margin-bottom:14px;font-size:16px;color:var(--gray);font-weight:600;">Ejemplo práctico:</div>
       <div class="ex-grid">
         <div class="ex-card">
           <div class="ex-val">100 W</div>
@@ -521,7 +522,7 @@
           <div class="ex-label">Consumo al día</div>
         </div>
       </div>
-      <div style="margin-top:16px;font-size:13px;color:var(--lightGray);background:var(--navyMid);padding:12px 16px;border-radius:8px;border-left:4px solid var(--accent)">
+      <div style="margin-top:16px;font-size:15px;color:var(--lightGray);background:var(--navyMid);padding:14px 18px;border-radius:8px;border-left:5px solid var(--accent)">
         💡 Multiplica por 30 para el mes. Por 365 para el año. Por el costo del kWh para ver el impacto en RD$.
       </div>
     </div>
@@ -534,30 +535,30 @@
       <div class="slide-title">Del dato al resultado en Excel</div>
       <div class="card-grid g3" style="flex:1">
         <div class="card" style="position:relative">
-          <div style="width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--navy);margin-bottom:12px">1</div>
-          <div class="card-title" style="font-size:15px">Hoja de datos</div>
+          <div style="width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:var(--navy);margin-bottom:14px">1</div>
+          <div class="card-title" style="font-size:18px">Hoja de datos</div>
           <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:12px;color:var(--lightGray);display:flex;align-items:center;gap:6px">→ Área, equipo, cantidad</div>
-            <div style="font-size:12px;color:var(--lightGray);display:flex;align-items:center;gap:6px">→ Potencia (W)</div>
-            <div style="font-size:12px;color:var(--lightGray);display:flex;align-items:center;gap:6px">→ Horas de uso</div>
+            <div style="font-size:16px;color:var(--lightGray);display:flex;align-items:center;gap:6px">→ Área, equipo, cantidad</div>
+            <div style="font-size:16px;color:var(--lightGray);display:flex;align-items:center;gap:6px">→ Potencia (W)</div>
+            <div style="font-size:16px;color:var(--lightGray);display:flex;align-items:center;gap:6px">→ Horas de uso</div>
           </div>
         </div>
         <div class="card teal">
-          <div style="width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--white);margin-bottom:12px">2</div>
-          <div class="card-title" style="font-size:15px">Hoja de cálculos</div>
+          <div style="width:36px;height:36px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:var(--white);margin-bottom:14px">2</div>
+          <div class="card-title" style="font-size:18px">Hoja de cálculos</div>
           <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:12px;color:var(--lightGray)">→ Consumo día/mes/año</div>
-            <div style="font-size:12px;color:var(--lightGray)">→ Cargas críticas</div>
-            <div style="font-size:12px;color:var(--lightGray)">→ Impacto económico</div>
+            <div style="font-size:16px;color:var(--lightGray)">→ Consumo día/mes/año</div>
+            <div style="font-size:16px;color:var(--lightGray)">→ Cargas críticas</div>
+            <div style="font-size:16px;color:var(--lightGray)">→ Impacto económico</div>
           </div>
         </div>
         <div class="card green">
-          <div style="width:36px;height:36px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:var(--white);margin-bottom:12px">3</div>
-          <div class="card-title" style="font-size:15px">Hoja de resultados</div>
+          <div style="width:36px;height:36px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:var(--white);margin-bottom:14px">3</div>
+          <div class="card-title" style="font-size:18px">Hoja de resultados</div>
           <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:12px;color:var(--lightGray)">→ Resumen por categoría</div>
-            <div style="font-size:12px;color:var(--lightGray)">→ Top 3 consumidores</div>
-            <div style="font-size:12px;color:var(--lightGray)">→ Oportunidades de ahorro</div>
+            <div style="font-size:16px;color:var(--lightGray)">→ Resumen por categoría</div>
+            <div style="font-size:16px;color:var(--lightGray)">→ Top 3 consumidores</div>
+            <div style="font-size:16px;color:var(--lightGray)">→ Oportunidades de ahorro</div>
           </div>
         </div>
       </div>
@@ -572,16 +573,16 @@
       <div class="timer-badge">⏱ 40 minutos</div>
       <div class="card-grid g3">
         <div class="card" style="background:rgba(255,255,255,0.1);border-top-color:#a3f0e0">
-          <div style="font-size:22px;font-weight:800;color:#a3f0e0;margin-bottom:6px">A</div>
-          <div class="card-body" style="color:var(--white);font-size:13px">Introduzcan los datos del levantamiento en la plantilla</div>
+          <div style="font-size:26px;font-weight:800;color:#a3f0e0;margin-bottom:8px">A</div>
+          <div class="card-body" style="color:var(--white);font-size:16px">Introduzcan los datos del levantamiento en la plantilla</div>
         </div>
         <div class="card" style="background:rgba(255,255,255,0.1);border-top-color:#a3f0e0">
-          <div style="font-size:22px;font-weight:800;color:#a3f0e0;margin-bottom:6px">B</div>
-          <div class="card-body" style="color:var(--white);font-size:13px">Calculen el consumo total del área (kWh/mes)</div>
+          <div style="font-size:26px;font-weight:800;color:#a3f0e0;margin-bottom:8px">B</div>
+          <div class="card-body" style="color:var(--white);font-size:16px">Calculen el consumo total del área (kWh/mes)</div>
         </div>
         <div class="card" style="background:rgba(255,255,255,0.1);border-top-color:#a3f0e0">
-          <div style="font-size:22px;font-weight:800;color:#a3f0e0;margin-bottom:6px">C</div>
-          <div class="card-body" style="color:var(--white);font-size:13px">Identifiquen los 3 equipos que más consumen</div>
+          <div style="font-size:26px;font-weight:800;color:#a3f0e0;margin-bottom:8px">C</div>
+          <div class="card-body" style="color:var(--white);font-size:16px">Identifiquen los 3 equipos que más consumen</div>
         </div>
       </div>
     </div>
@@ -618,7 +619,7 @@
       <div class="slide-eyebrow">Bloque 4 · Mini reporte</div>
       <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:24px">
         <div class="slide-title" style="margin:0">El mini reporte</div>
-        <div style="font-size:12px;color:var(--accent);font-style:italic">máx. 2 páginas</div>
+        <div style="font-size:16px;color:var(--accent);font-style:italic">máx. 2 páginas</div>
       </div>
       <div class="report-item">
         <div class="report-accent"></div>
@@ -673,7 +674,7 @@
           <div class="col-item"><div class="col-dot"></div>Repetir cada ciclo → mejorar</div>
         </div>
       </div>
-      <div style="background:var(--navyMid);color:var(--lightGray);font-size:12px;text-align:center;padding:10px;border-radius:8px;margin-top:12px">
+      <div style="background:var(--navyMid);color:var(--lightGray);font-size:15px;text-align:center;padding:12px;border-radius:8px;margin-top:12px">
         MEM estará con ustedes como soporte técnico, guía y seguimiento en cada paso del proceso.
       </div>
     </div>
@@ -685,11 +686,11 @@
     <div class="cover-geo"></div>
     <div class="cover-geo2"></div>
     <div class="cover-body">
-      <div style="font-size:11px;color:var(--accent);letter-spacing:3px;font-weight:700;margin-bottom:16px;text-transform:uppercase">Mensaje final</div>
+      <div style="font-size:13px;color:var(--accent);letter-spacing:3px;font-weight:700;margin-bottom:16px;text-transform:uppercase">Mensaje final</div>
       <div class="closing-quote">
         "Lo importante no es<br>hacerlo perfecto.<br><span class="accent">Es hacerlo constante<br>y mejorando<br>cada vez."</span>
       </div>
-      <div style="margin-top:32px;font-size:11px;color:var(--gray)">
+      <div style="margin-top:32px;font-size:15px;color:var(--gray)">
         Ministerio de Energía y Minas · MEM · República Dominicana
       </div>
     </div>
