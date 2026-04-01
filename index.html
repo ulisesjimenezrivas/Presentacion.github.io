@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auditoria Energetica</title>
+    <title>Auditoría Energética</title>
     <style>
         * {
             margin: 0;
@@ -255,18 +255,23 @@
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
+            font-size: 0.9rem;
         }
 
         th {
             background: #1e3a8a;
             color: white;
-            padding: 1rem;
+            padding: 0.75rem;
             text-align: left;
         }
 
         td {
-            padding: 0.75rem 1rem;
+            padding: 0.75rem;
             border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
         }
 
         .list-item {
@@ -286,6 +291,20 @@
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
             font-size: 0.9rem;
+        }
+
+        .equipment-detail {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-radius: 0.5rem;
+        }
+
+        .equipment-detail strong {
+            display: block;
+            color: #0c4a6e;
+            margin-bottom: 0.5rem;
         }
 
         footer {
@@ -327,6 +346,15 @@
             margin-bottom: 0.5rem;
         }
 
+        .success-box {
+            background: #dcfce7;
+            border-left: 4px solid #16a34a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            color: #15803d;
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.5rem;
@@ -348,21 +376,29 @@
             .nav-footer {
                 flex-direction: column;
             }
+
+            table {
+                font-size: 0.8rem;
+            }
+        }
+
+        .page-break {
+            page-break-after: always;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>AUDITORIA ENERGETICA</h1>
-        <p>Herramienta interactiva de formacion</p>
+        <h1>AUDITORÍA ENERGÉTICA</h1>
+        <p>Herramienta interactiva de capacitación y análisis</p>
     </header>
 
     <nav class="nav">
         <div class="nav-container">
-            <button class="nav-btn active" onclick="ir(1)">1. Introduccion</button>
+            <button class="nav-btn active" onclick="ir(1)">1. Introducción</button>
             <button class="nav-btn" onclick="ir(2)">2. Equipos</button>
             <button class="nav-btn" onclick="ir(3)">3. Levantamiento</button>
-            <button class="nav-btn" onclick="ir(4)">4. Analisis</button>
+            <button class="nav-btn" onclick="ir(4)">4. Análisis</button>
             <button class="nav-btn" onclick="ir(5)">5. Ejercicio</button>
             <button class="nav-btn" onclick="ir(6)">6. Informe</button>
         </div>
@@ -371,80 +407,110 @@
     <main>
         <section id="b1" class="block active">
             <div class="header-block">
-                <h2>Bloque 1: Introduccion</h2>
-                <p>Conceptos fundamentales sobre auditoria energetica</p>
+                <h2>Bloque 1: Introducción</h2>
+                <p>Conceptos fundamentales sobre auditoría energética</p>
             </div>
 
             <div class="card">
-                <h3>Que es una Auditoria Energetica</h3>
-                <p>Una auditoria energetica es un analisis detallado del consumo de energia en una instalacion.</p>
+                <h3>¿Qué es una Auditoría Energética?</h3>
+                <p>Una auditoría energética es un análisis detallado y sistemático del consumo de energía en una instalación o edificio. Su objetivo es identificar oportunidades de ahorro energético y mejorar la eficiencia en el uso de la energía eléctrica.</p>
                 <div class="info-box indigo">
                     <strong>Incluye:</strong>
                     <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
-                        <li>Levantamiento de equipos electricos</li>
-                        <li>Medicion de parametros electricos</li>
-                        <li>Analisis del consumo de energia</li>
-                        <li>Identificacion de equipos ineficientes</li>
-                        <li>Propuestas de mejora y ahorro</li>
+                        <li>Levantamiento detallado de equipos eléctricos</li>
+                        <li>Medición de parámetros eléctricos en tiempo real</li>
+                        <li>Análisis del consumo de energía por área y equipo</li>
+                        <li>Identificación de equipos ineficientes</li>
+                        <li>Propuestas de mejora y ahorro energético</li>
                     </ul>
                 </div>
             </div>
 
             <div class="card">
                 <h3>Decreto 158-23</h3>
-                <p>Decreto que establece medidas para la eficiencia energetica:</p>
+                <p>Decreto que establece medidas para la eficiencia energética en edificios del sector público:</p>
                 <ul>
-                    <li>Objetivo: Promover eficiencia en el sector publico</li>
-                    <li>Requisito: Auditorias cada 4 anos</li>
-                    <li>Plazo: Implementar mejoras en 12 meses</li>
-                    <li>Reportes: Informes anuales obligatorios</li>
+                    <li><strong>Objetivo:</strong> Promover la eficiencia energética en el sector público</li>
+                    <li><strong>Aplicabilidad:</strong> Gobierno central, local y descentralizado</li>
+                    <li><strong>Requisito:</strong> Realizar auditorías energéticas cada 4 años como mínimo</li>
+                    <li><strong>Plazo:</strong> Implementar mejoras en un período de 12 meses</li>
+                    <li><strong>Responsabilidad:</strong> Designar responsables de energía en cada institución</li>
+                    <li><strong>Capacitación:</strong> Personal debe recibir entrenamiento sobre eficiencia energética</li>
+                    <li><strong>Reportes:</strong> Presentar informes anuales sobre consumo y mejoras</li>
                 </ul>
             </div>
         </section>
 
         <section id="b2" class="block">
             <div class="header-block">
-                <h2>Bloque 2: Equipos de Medicion</h2>
+                <h2>Bloque 2: Equipos de Medición</h2>
+                <p>Instrumentos esenciales para recopilar datos precisos</p>
             </div>
 
             <div class="grid-2">
                 <div class="card">
-                    <h3>Pinza Amperimetrica</h3>
-                    <p>Medir corriente sin interrumpir el circuito</p>
+                    <h3>Pinza Amperimétrica</h3>
+                    <p>Permite medir la corriente eléctrica sin interrumpir el circuito. Es el instrumento más utilizado en auditorías energéticas.</p>
                     <ul>
-                        <li>No invasiva</li>
-                        <li>Lectura instantanea</li>
-                        <li>Rango: 0-1000 A</li>
+                        <li>No invasiva y segura</li>
+                        <li>Lectura instantánea</li>
+                        <li>Rango típico: 0-1000 A</li>
+                        <li>Ideal para mediciones en equipos activos</li>
                     </ul>
                 </div>
 
                 <div class="card">
-                    <h3>Luxometro</h3>
-                    <p>Medir intensidad de luz (lux)</p>
+                    <h3>Luxómetro</h3>
+                    <p>Equipo especializado para medir la intensidad de luz (iluminancia) en diferentes áreas de la instalación.</p>
                     <ul>
-                        <li>Mide iluminancia</li>
+                        <li>Mide iluminancia en lux</li>
+                        <li>Cumple con normas NOM-025</li>
                         <li>Rango: 0-99,999 lux</li>
-                        <li>Portatil y preciso</li>
+                        <li>Portátil y de alta precisión</li>
                     </ul>
                 </div>
 
                 <div class="card">
-                    <h3>Pirometro</h3>
-                    <p>Medir temperatura sin contacto</p>
+                    <h3>Pirómetro Infrarrojo</h3>
+                    <p>Utiliza radiación infrarroja para medir la temperatura de superficies sin necesidad de contacto físico.</p>
                     <ul>
-                        <li>Radiacion infrarroja</li>
-                        <li>Seguro</li>
-                        <li>Respuesta rapida</li>
+                        <li>Medición sin contacto</li>
+                        <li>Seguro para superficies peligrosas</li>
+                        <li>Rango: -50 a +550°C</li>
+                        <li>Respuesta instantánea</li>
                     </ul>
                 </div>
 
                 <div class="card">
-                    <h3>Analizador de Redes</h3>
-                    <p>Mediciones electricas completas</p>
+                    <h3>Medidor de Temperatura</h3>
+                    <p>Equipo de contacto directo para medir la temperatura ambiente y de equipos con mayor precisión.</p>
                     <ul>
-                        <li>Voltaje, corriente, potencia</li>
-                        <li>Factor de potencia</li>
-                        <li>Registrador de datos</li>
+                        <li>Sonda de contacto termocupla</li>
+                        <li>Precisión de ±1°C</li>
+                        <li>Lectura rápida y confiable</li>
+                        <li>Para áreas y equipos específicos</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Analizador de Redes Eléctricas</h3>
+                    <p>Equipo profesional que mide múltiples parámetros eléctricos simultáneamente para un análisis completo.</p>
+                    <ul>
+                        <li>Voltaje, corriente y potencia</li>
+                        <li>Factor de potencia y armónicos</li>
+                        <li>Registrador de datos continuo</li>
+                        <li>Pantalla digital de alto rendimiento</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Recomendaciones de Medición</h3>
+                    <ul>
+                        <li>Utilizar equipo de protección personal (EPP)</li>
+                        <li>Realizar 3 mediciones en diferentes momentos</li>
+                        <li>Registrar hora y condiciones del lugar</li>
+                        <li>Verificar calibración periódica de equipos</li>
+                        <li>Documentar toda la información recopilada</li>
                     </ul>
                 </div>
             </div>
@@ -453,20 +519,21 @@
         <section id="b3" class="block">
             <div class="header-block">
                 <h2>Bloque 3: Levantamiento en Campo</h2>
+                <p>Registra los datos de los equipos identificados durante la inspección</p>
             </div>
 
             <div class="tabs">
-                <button class="tab-btn active" onclick="irtab(1)">Climatizacion</button>
+                <button class="tab-btn active" onclick="irtab(1)">Climatización</button>
                 <button class="tab-btn" onclick="irtab(2)">Equipos</button>
                 <button class="tab-btn" onclick="irtab(3)">Luminaria</button>
             </div>
 
             <div id="t1" class="tab-content active">
                 <div class="card">
-                    <h3>Nuevo Equipo Climatizacion</h3>
+                    <h3>Nuevo Equipo de Climatización</h3>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Area</label>
+                            <label>Área de trabajo</label>
                             <input type="text" id="c_area">
                         </div>
                         <div class="form-group">
@@ -478,33 +545,53 @@
                             <input type="text" id="c_modelo">
                         </div>
                         <div class="form-group">
-                            <label>Potencia TON</label>
-                            <input type="number" id="c_potencia">
+                            <label>Potencia (TON)</label>
+                            <input type="number" id="c_potencia" step="0.1">
                         </div>
                         <div class="form-group">
-                            <label>Horas uso</label>
-                            <input type="number" id="c_horas">
+                            <label>Voltaje (V)</label>
+                            <input type="number" id="c_voltaje">
+                        </div>
+                        <div class="form-group">
+                            <label>Corriente (A)</label>
+                            <input type="number" id="c_corriente" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Horas de uso/día</label>
+                            <input type="number" id="c_horas" step="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Eficiencia (SEER)</label>
+                            <input type="number" id="c_seer" step="0.1">
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="addclim()">Agregar</button>
+                    <button class="btn btn-primary" onclick="addclim()">Agregar Equipo</button>
                 </div>
                 <div id="lclim"></div>
             </div>
 
             <div id="t2" class="tab-content">
                 <div class="card">
-                    <h3>Nuevo Equipo</h3>
+                    <h3>Nuevo Equipo Eléctrico</h3>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Area</label>
+                            <label>Área</label>
                             <input type="text" id="e_area">
                         </div>
                         <div class="form-group">
-                            <label>Tipo</label>
+                            <label>Tipo de equipo</label>
                             <input type="text" id="e_tipo">
                         </div>
                         <div class="form-group">
-                            <label>Potencia W</label>
+                            <label>Voltaje (V)</label>
+                            <input type="number" id="e_voltaje">
+                        </div>
+                        <div class="form-group">
+                            <label>Amperaje (A)</label>
+                            <input type="number" id="e_amperaje" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Potencia (W)</label>
                             <input type="number" id="e_potencia">
                         </div>
                         <div class="form-group">
@@ -512,11 +599,15 @@
                             <input type="number" id="e_cantidad" value="1">
                         </div>
                         <div class="form-group">
-                            <label>Horas uso</label>
-                            <input type="number" id="e_horas">
+                            <label>Horas de uso/día</label>
+                            <input type="number" id="e_horas" step="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <input type="text" id="e_desc">
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="addeq()">Agregar</button>
+                    <button class="btn btn-primary" onclick="addeq()">Agregar Equipo</button>
                 </div>
                 <div id="leq"></div>
             </div>
@@ -526,27 +617,35 @@
                     <h3>Nueva Luminaria</h3>
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Area</label>
+                            <label>Área de trabajo</label>
                             <input type="text" id="l_area">
                         </div>
                         <div class="form-group">
-                            <label>Tipo</label>
+                            <label>Tipo de luminaria</label>
                             <input type="text" id="l_tipo">
-                        </div>
-                        <div class="form-group">
-                            <label>Potencia W</label>
-                            <input type="number" id="l_potencia">
                         </div>
                         <div class="form-group">
                             <label>Cantidad</label>
                             <input type="number" id="l_cantidad" value="1">
                         </div>
                         <div class="form-group">
-                            <label>Horas uso</label>
-                            <input type="number" id="l_horas">
+                            <label>Voltaje (V)</label>
+                            <input type="number" id="l_voltaje">
+                        </div>
+                        <div class="form-group">
+                            <label>Amperaje (A)</label>
+                            <input type="number" id="l_amperaje" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label>Potencia (W)</label>
+                            <input type="number" id="l_potencia">
+                        </div>
+                        <div class="form-group">
+                            <label>Horas de uso/día</label>
+                            <input type="number" id="l_horas" step="0.5">
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="addlum()">Agregar</button>
+                    <button class="btn btn-primary" onclick="addlum()">Agregar Luminaria</button>
                 </div>
                 <div id="llum"></div>
             </div>
@@ -554,13 +653,14 @@
 
         <section id="b4" class="block">
             <div class="header-block">
-                <h2>Bloque 4: Analisis de Datos</h2>
+                <h2>Bloque 4: Análisis de Datos</h2>
+                <p>Análisis del consumo energético registrado</p>
             </div>
 
             <div class="stats-grid">
                 <div class="stat-card">
                     <p id="sc1">0</p>
-                    <p>Climatizacion</p>
+                    <p>Climatización</p>
                 </div>
                 <div class="stat-card">
                     <p id="sc2">0</p>
@@ -576,18 +676,27 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary" style="width: 100%; padding: 1rem;" onclick="analizar()">REALIZAR ANALISIS</button>
+            <button class="btn btn-primary" style="width: 100%; padding: 1rem;" onclick="analizar()">REALIZAR ANÁLISIS</button>
             <div id="ares"></div>
         </section>
 
         <section id="b5" class="block">
             <div class="header-block">
-                <h2>Bloque 5: Ejercicio Practico</h2>
+                <h2>Bloque 5: Ejercicio Práctico Guiado</h2>
+                <p>Simulación de auditoría en una oficina gubernamental típica</p>
             </div>
 
             <div class="card">
-                <p>Oficina gubernamental con 10 estaciones de trabajo, aire central de 5 TON y aire split en gerencia.</p>
-                <button class="btn btn-success" style="width: 100%; padding: 1.5rem; margin-top: 1rem;" onclick="cargarej()">CARGAR DATOS</button>
+                <h3>Descripción del Ejercicio</h3>
+                <p>Este ejercicio práctico simula una auditoría energética completa en una oficina gubernamental con:</p>
+                <ul>
+                    <li><strong>10 estaciones de trabajo</strong> con computadoras de escritorio</li>
+                    <li><strong>1 oficina de gerencia</strong> con equipos especializados</li>
+                    <li><strong>Área compartida</strong> con equipo de soporte</li>
+                    <li><strong>Sistemas de climatización</strong> central y zonificados</li>
+                    <li><strong>Sistema de iluminación</strong> LED moderno</li>
+                </ul>
+                <button class="btn btn-success" style="width: 100%; padding: 1.5rem; margin-top: 1rem; font-size: 1.1rem;" onclick="cargarej()">CARGAR DATOS DEL EJERCICIO</button>
                 <div id="msgej"></div>
             </div>
         </section>
@@ -595,11 +704,12 @@
         <section id="b6" class="block">
             <div class="header-block">
                 <h2>Bloque 6: Informe Final</h2>
+                <p>Generación del informe de auditoría energética</p>
             </div>
 
             <div id="prev"></div>
 
-            <button class="btn btn-success" style="width: 100%; padding: 1.5rem;" onclick="descargar()">DESCARGAR INFORME</button>
+            <button class="btn btn-success" style="width: 100%; padding: 1.5rem; margin-top: 2rem;" onclick="descargar()">DESCARGAR INFORME COMPLETO (HTML)</button>
         </section>
     </main>
 
@@ -609,7 +719,7 @@
             <span id="info">Bloque 1 de 6</span>
             <button class="btn btn-primary" onclick="ir(proximo())">Siguiente</button>
         </div>
-        <p>2024 Sistema de Auditoria Energetica</p>
+        <p>2024 Sistema de Auditoría Energética | Decreto 158-23</p>
     </footer>
 
     <script>
@@ -637,7 +747,8 @@ function ir(n) {
     
     bloque = n;
     document.getElementById('info').innerText = 'Bloque '+n+' de 6';
-    act();
+    if(n == 3) act();
+    if(n == 6) mostrarprev();
 }
 
 function proximo() { return bloque < 6 ? bloque + 1 : 6; }
@@ -654,7 +765,7 @@ function irtab(n) {
 }
 
 function addclim() {
-    datos.c.push({id:Date.now(), area:document.getElementById('c_area').value, marca:document.getElementById('c_marca').value, modelo:document.getElementById('c_modelo').value, potencia:parseFloat(document.getElementById('c_potencia').value)||0, horas:parseFloat(document.getElementById('c_horas').value)||0});
+    datos.c.push({id:Date.now(), area:document.getElementById('c_area').value, marca:document.getElementById('c_marca').value, modelo:document.getElementById('c_modelo').value, potencia:parseFloat(document.getElementById('c_potencia').value)||0, voltaje:parseFloat(document.getElementById('c_voltaje').value)||0, corriente:parseFloat(document.getElementById('c_corriente').value)||0, horas:parseFloat(document.getElementById('c_horas').value)||0, seer:parseFloat(document.getElementById('c_seer').value)||0});
     guardar();
     lclim();
     act();
@@ -662,16 +773,19 @@ function addclim() {
     document.getElementById('c_marca').value = '';
     document.getElementById('c_modelo').value = '';
     document.getElementById('c_potencia').value = '';
+    document.getElementById('c_voltaje').value = '';
+    document.getElementById('c_corriente').value = '';
     document.getElementById('c_horas').value = '';
+    document.getElementById('c_seer').value = '';
 }
 
 function lclim() {
     var html = '';
     for(var i = 0; i < datos.c.length; i++) {
         var d = datos.c[i];
-        html += '<div class="list-item"><div class="list-item-content"><div><strong>Area:</strong> '+d.area+'</div><div><strong>Marca:</strong> '+d.marca+' '+d.modelo+'</div><div><strong>Potencia:</strong> '+d.potencia+' TON</div><div><strong>Horas:</strong> '+d.horas+'h</div></div><button class="btn btn-danger" onclick="delclim('+d.id+')">X</button></div>';
+        html += '<div class="list-item"><div class="list-item-content"><div><strong>Área:</strong> '+d.area+'</div><div><strong>Marca:</strong> '+d.marca+' '+d.modelo+'</div><div><strong>Potencia:</strong> '+d.potencia+' TON</div><div><strong>SEER:</strong> '+d.seer+'</div><div><strong>Horas:</strong> '+d.horas+'h</div></div><button class="btn btn-danger" onclick="delclim('+d.id+')">Eliminar</button></div>';
     }
-    document.getElementById('lclim').innerHTML = html;
+    document.getElementById('lclim').innerHTML = html || '<p style="color:#9ca3af;padding:2rem;text-align:center;">No hay equipos registrados aún</p>';
 }
 
 function delclim(id) {
@@ -682,15 +796,18 @@ function delclim(id) {
 }
 
 function addeq() {
-    datos.e.push({id:Date.now(), area:document.getElementById('e_area').value, tipo:document.getElementById('e_tipo').value, potencia:parseFloat(document.getElementById('e_potencia').value)||0, cantidad:parseInt(document.getElementById('e_cantidad').value)||1, horas:parseFloat(document.getElementById('e_horas').value)||0});
+    datos.e.push({id:Date.now(), area:document.getElementById('e_area').value, tipo:document.getElementById('e_tipo').value, voltaje:parseFloat(document.getElementById('e_voltaje').value)||0, amperaje:parseFloat(document.getElementById('e_amperaje').value)||0, potencia:parseFloat(document.getElementById('e_potencia').value)||0, cantidad:parseInt(document.getElementById('e_cantidad').value)||1, horas:parseFloat(document.getElementById('e_horas').value)||0, desc:document.getElementById('e_desc').value});
     guardar();
     leq();
     act();
     document.getElementById('e_area').value = '';
     document.getElementById('e_tipo').value = '';
+    document.getElementById('e_voltaje').value = '';
+    document.getElementById('e_amperaje').value = '';
     document.getElementById('e_potencia').value = '';
     document.getElementById('e_cantidad').value = '1';
     document.getElementById('e_horas').value = '';
+    document.getElementById('e_desc').value = '';
 }
 
 function leq() {
@@ -698,9 +815,9 @@ function leq() {
     for(var i = 0; i < datos.e.length; i++) {
         var d = datos.e[i];
         var c = (d.potencia * d.cantidad * d.horas) / 1000;
-        html += '<div class="list-item"><div class="list-item-content"><div><strong>Area:</strong> '+d.area+'</div><div><strong>Tipo:</strong> '+d.tipo+'</div><div><strong>Potencia:</strong> '+d.potencia+'W x'+d.cantidad+'</div><div><strong>Consumo/dia:</strong> '+c.toFixed(2)+' kWh</div></div><button class="btn btn-danger" onclick="deleq('+d.id+')">X</button></div>';
+        html += '<div class="list-item"><div class="list-item-content"><div><strong>Área:</strong> '+d.area+'</div><div><strong>Equipo:</strong> '+d.tipo+'</div><div><strong>Potencia:</strong> '+d.potencia+'W x'+d.cantidad+'</div><div><strong>Horas/día:</strong> '+d.horas+'h</div><div><strong>Consumo/día:</strong> '+c.toFixed(2)+' kWh</div></div><button class="btn btn-danger" onclick="deleq('+d.id+')">Eliminar</button></div>';
     }
-    document.getElementById('leq').innerHTML = html;
+    document.getElementById('leq').innerHTML = html || '<p style="color:#9ca3af;padding:2rem;text-align:center;">No hay equipos registrados aún</p>';
 }
 
 function deleq(id) {
@@ -711,7 +828,7 @@ function deleq(id) {
 }
 
 function addlum() {
-    datos.l.push({id:Date.now(), area:document.getElementById('l_area').value, tipo:document.getElementById('l_tipo').value, potencia:parseFloat(document.getElementById('l_potencia').value)||0, cantidad:parseInt(document.getElementById('l_cantidad').value)||1, horas:parseFloat(document.getElementById('l_horas').value)||0});
+    datos.l.push({id:Date.now(), area:document.getElementById('l_area').value, tipo:document.getElementById('l_tipo').value, potencia:parseFloat(document.getElementById('l_potencia').value)||0, cantidad:parseInt(document.getElementById('l_cantidad').value)||1, horas:parseFloat(document.getElementById('l_horas').value)||0, voltaje:parseFloat(document.getElementById('l_voltaje').value)||0, amperaje:parseFloat(document.getElementById('l_amperaje').value)||0});
     guardar();
     llum();
     act();
@@ -720,6 +837,8 @@ function addlum() {
     document.getElementById('l_potencia').value = '';
     document.getElementById('l_cantidad').value = '1';
     document.getElementById('l_horas').value = '';
+    document.getElementById('l_voltaje').value = '';
+    document.getElementById('l_amperaje').value = '';
 }
 
 function llum() {
@@ -727,9 +846,9 @@ function llum() {
     for(var i = 0; i < datos.l.length; i++) {
         var d = datos.l[i];
         var c = (d.potencia * d.cantidad * d.horas) / 1000;
-        html += '<div class="list-item"><div class="list-item-content"><div><strong>Area:</strong> '+d.area+'</div><div><strong>Tipo:</strong> '+d.tipo+'</div><div><strong>Potencia:</strong> '+d.potencia+'W x'+d.cantidad+'</div><div><strong>Consumo/dia:</strong> '+c.toFixed(2)+' kWh</div></div><button class="btn btn-danger" onclick="dellum('+d.id+')">X</button></div>';
+        html += '<div class="list-item"><div class="list-item-content"><div><strong>Área:</strong> '+d.area+'</div><div><strong>Tipo:</strong> '+d.tipo+'</div><div><strong>Potencia:</strong> '+d.potencia+'W x'+d.cantidad+'</div><div><strong>Horas/día:</strong> '+d.horas+'h</div><div><strong>Consumo/día:</strong> '+c.toFixed(2)+' kWh</div></div><button class="btn btn-danger" onclick="dellum('+d.id+')">Eliminar</button></div>';
     }
-    document.getElementById('llum').innerHTML = html;
+    document.getElementById('llum').innerHTML = html || '<p style="color:#9ca3af;padding:2rem;text-align:center;">No hay luminarias registradas aún</p>';
 }
 
 function dellum(id) {
@@ -748,7 +867,7 @@ function act() {
 
 function analizar() {
     if(datos.c.length + datos.e.length + datos.l.length == 0) {
-        alert('Registra equipos primero');
+        alert('Registra equipos primero en el Bloque 3');
         return;
     }
     
@@ -757,31 +876,33 @@ function analizar() {
     
     for(i = 0; i < datos.c.length; i++) {
         var d = datos.c[i];
-        todos.push({cat:'Climatizacion', nom:d.marca+' '+d.modelo, pot:d.potencia*800, hor:d.horas, cant:1});
+        var potenciaKW = (d.voltaje * d.corriente * 1.732 * 0.85) / 1000;
+        todos.push({cat:'Climatización', nom:d.marca+' '+d.modelo, area:d.area, pot:potenciaKW*1000, hor:d.horas, cant:1, vol:d.voltaje, amp:d.corriente, seer:d.seer});
     }
     for(i = 0; i < datos.e.length; i++) {
         var d = datos.e[i];
-        todos.push({cat:'Equipos', nom:d.tipo, pot:d.potencia, hor:d.horas, cant:d.cantidad});
+        todos.push({cat:'Equipos', nom:d.tipo, area:d.area, pot:d.potencia, hor:d.horas, cant:d.cantidad, vol:d.voltaje, amp:d.amperaje, desc:d.desc});
     }
     for(i = 0; i < datos.l.length; i++) {
         var d = datos.l[i];
-        todos.push({cat:'Luminaria', nom:d.tipo, pot:d.potencia, hor:d.horas, cant:d.cantidad});
+        todos.push({cat:'Luminaria', nom:d.tipo, area:d.area, pot:d.potencia, hor:d.horas, cant:d.cantidad, vol:d.voltaje, amp:d.amperaje});
     }
     
     var det = [];
     for(i = 0; i < todos.length; i++) {
         var eq = todos[i];
-        det.push({cat:eq.cat, nom:eq.nom, pot:eq.pot, hor:eq.hor, cant:eq.cant, d:(eq.pot*eq.cant*eq.hor)/1000, m:(eq.pot*eq.cant*eq.hor*30)/1000, a:(eq.pot*eq.cant*eq.hor*365)/1000});
+        det.push({cat:eq.cat, nom:eq.nom, area:eq.area, pot:eq.pot, hor:eq.hor, cant:eq.cant, vol:eq.vol, amp:eq.amp, seer:eq.seer, desc:eq.desc, d:(eq.pot*eq.cant*eq.hor)/1000, m:(eq.pot*eq.cant*eq.hor*30)/1000, a:(eq.pot*eq.cant*eq.hor*365)/1000});
     }
     
     var cat = {};
     for(i = 0; i < det.length; i++) {
         var eq = det[i];
-        if(!cat[eq.cat]) cat[eq.cat] = {c:0, d:0, m:0, a:0};
+        if(!cat[eq.cat]) cat[eq.cat] = {c:0, d:0, m:0, a:0, items:[]};
         cat[eq.cat].c += eq.cant;
         cat[eq.cat].d += eq.d;
         cat[eq.cat].m += eq.m;
         cat[eq.cat].a += eq.a;
+        cat[eq.cat].items.push(eq);
     }
     
     var tot = 0;
@@ -800,11 +921,17 @@ function analizar() {
 function mostrares() {
     if(!datos.a) return;
     
-    var html = '<div class="card"><h3>Consumo por Categoria</h3><table><thead><tr><th>Categoria</th><th>Eq</th><th>Dia</th><th>Mes</th><th>Ano</th></tr></thead><tbody>';
+    var html = '<div class="card"><h3>Consumo por Categoría</h3><table><thead><tr><th>Categoría</th><th>Cantidad</th><th>Consumo/día</th><th>Consumo/mes</th><th>Consumo/año</th><th>%</th></tr></thead><tbody>';
     
     for(var c in datos.a.cat) {
         var d = datos.a.cat[c];
-        html += '<tr><td>'+c+'</td><td>'+d.c+'</td><td>'+d.d.toFixed(2)+'</td><td>'+d.m.toFixed(2)+'</td><td>'+d.a.toFixed(2)+'</td></tr>';
+        var pct = (d.a/datos.a.tot*100).toFixed(1);
+        html += '<tr><td><strong>'+c+'</strong></td><td>'+d.c+'</td><td>'+d.d.toFixed(2)+' kWh</td><td>'+d.m.toFixed(2)+' kWh</td><td>'+d.a.toFixed(2)+' kWh</td><td>'+pct+'%</td></tr>';
+        
+        for(var j = 0; j < d.items.length; j++) {
+            var it = d.items[j];
+            html += '<tr style="background:#f0f9ff;"><td style="padding-left:2rem;">└ '+it.nom+'</td><td>'+it.cant+'</td><td>'+it.d.toFixed(2)+' kWh</td><td>'+it.m.toFixed(2)+' kWh</td><td>'+it.a.toFixed(2)+' kWh</td><td>'+(it.a/datos.a.tot*100).toFixed(1)+'%</td></tr>';
+        }
     }
     
     var te = 0, td = 0, tm = 0;
@@ -813,20 +940,19 @@ function mostrares() {
         te += d.c; td += d.d; tm += d.m;
     }
     
-    html += '<tr style="background:#e0e7ff;"><td><strong>TOTAL</strong></td><td>'+te+'</td><td>'+td.toFixed(2)+'</td><td>'+tm.toFixed(2)+'</td><td>'+datos.a.tot.toFixed(2)+'</td></tr></tbody></table></div>';
+    html += '<tr style="background:#e0e7ff; font-weight:bold;"><td>TOTAL</td><td>'+te+'</td><td>'+td.toFixed(2)+' kWh</td><td>'+tm.toFixed(2)+' kWh</td><td>'+datos.a.tot.toFixed(2)+' kWh</td><td>100%</td></tr></tbody></table></div>';
     
     if(datos.a.use.length > 0) {
-        html += '<div class="card"><h3>Usos Significativos</h3>';
+        html += '<div class="card"><h3>Usos Significativos de Energía (USE)</h3><p>Los siguientes equipos representan más del 15% del consumo total:</p>';
         for(var i = 0; i < datos.a.use.length; i++) {
             var eq = datos.a.use[i];
             var p = (eq.a/datos.a.tot*100).toFixed(1);
-            html += '<div class="info-box indigo"><strong>'+eq.nom+'</strong><br>Consumo: '+eq.a.toFixed(2)+' kWh ('+p+'%)</div>';
+            html += '<div class="equipment-detail"><strong>'+eq.nom+' ('+eq.area+')</strong>Consumo anual: '+eq.a.toFixed(2)+' kWh ('+p+'% del total)<br>Consumo diario: '+eq.d.toFixed(2)+' kWh<br>Horas de uso: '+eq.hor+'h/día</div>';
         }
         html += '</div>';
     }
     
     document.getElementById('ares').innerHTML = html;
-    mostrarprev();
 }
 
 function cargarej() {
@@ -835,45 +961,86 @@ function cargarej() {
     datos.l = [];
     
     for(var i = 1; i <= 10; i++) {
-        datos.e.push({id:Date.now()+i, area:'Estacion '+i, tipo:'Monitor', potencia:55, cantidad:2, horas:8});
-        datos.e.push({id:Date.now()+i+100, area:'Estacion '+i, tipo:'CPU', potencia:330, cantidad:1, horas:8});
-        datos.e.push({id:Date.now()+i+200, area:'Estacion '+i, tipo:'UPS', potencia:550, cantidad:1, horas:8});
+        datos.e.push({id:Date.now()+i, area:'Estación '+i, tipo:'Monitor LCD 24"', voltaje:110, amperaje:0.5, potencia:55, cantidad:2, horas:8, desc:'Pantalla LCD de 24 pulgadas, resolución 1920x1080, consumo bajo'});
+        datos.e.push({id:Date.now()+i+100, area:'Estación '+i, tipo:'CPU Desktop', voltaje:110, amperaje:3, potencia:330, cantidad:1, horas:8, desc:'Computadora de escritorio Intel Core i5, fuente de 500W certificada'});
+        datos.e.push({id:Date.now()+i+200, area:'Estación '+i, tipo:'Sistema UPS', voltaje:110, amperaje:5, potencia:550, cantidad:1, horas:8, desc:'Fuente ininterrumpible de poder, capacidad 550VA, protege 3 dispositivos'});
     }
     
-    datos.e.push({id:Date.now()+999, area:'Area Compartida', tipo:'Impresora', potencia:880, cantidad:1, horas:6});
+    datos.e.push({id:Date.now()+999, area:'Área Compartida', tipo:'Impresora Multifuncional', voltaje:110, amperaje:8, potencia:880, cantidad:1, horas:6, desc:'Equipo de impresión, copiado y escaneo. Modelo profesional A4'});
     
-    datos.c.push({id:Date.now(), area:'Area General', marca:'Carrier', modelo:'24ACB060A', potencia:5, horas:10});
-    datos.c.push({id:Date.now()+1, area:'Gerencia', marca:'LG', modelo:'MS12SQ', potencia:1, horas:8});
+    datos.c.push({id:Date.now(), area:'Área General', marca:'Carrier', modelo:'24ACB060A', potencia:5, voltaje:220, corriente:15, horas:10, seer:22, desc:'Sistema de climatización central de 5 toneladas de capacidad, eficiencia energética SEER 22'});
+    datos.c.push({id:Date.now()+1, area:'Oficina de Gerencia', marca:'LG', modelo:'MS12SQ', potencia:1, voltaje:220, corriente:6, horas:8, seer:22, desc:'Equipo de aire acondicionado tipo Split de 12,000 BTU, eficiencia SEER 22'});
+    
+    datos.l.push({id:Date.now()+2000, area:'Áreas de Trabajo', tipo:'Luminaria LED Empotrada 30W', voltaje:110, amperaje:0.3, potencia:30, cantidad:20, horas:9, desc:'Luces LED modernas con bajo consumo'});
+    datos.l.push({id:Date.now()+2001, area:'Pasillos', tipo:'Luminaria LED Tubo 18W', voltaje:110, amperaje:0.2, potencia:18, cantidad:6, horas:10, desc:'Tubos LED T8 reemplazo de fluorescentes'});
+    datos.l.push({id:Date.now()+2002, area:'Oficina de Gerencia', tipo:'Lámpara LED de Escritorio 12W', voltaje:110, amperaje:0.15, potencia:12, cantidad:2, horas:8, desc:'Lámparas de escritorio con control de intensidad'});
     
     guardar();
     act();
-    document.getElementById('msgej').innerHTML = '<div class="info-box indigo"><strong>Datos cargados. Ve a Bloque 3 para verlos.</strong></div>';
-    document.getElementById('msgej').style.marginTop = '1rem';
+    document.getElementById('msgej').innerHTML = '<div class="success-box"><strong>✓ Datos cargados exitosamente</strong><br>Puedes ver los equipos en el Bloque 3 o realizar el análisis en el Bloque 4</div>';
 }
 
 function mostrarprev() {
     if(!datos.a) {
-        document.getElementById('prev').innerHTML = '<div class="info-box indigo">Realiza un analisis en Bloque 4</div>';
+        document.getElementById('prev').innerHTML = '<div class="info-box indigo"><strong>Realiza un análisis en el Bloque 4 para generar el informe</strong></div>';
         return;
     }
-    var html = '<div class="card"><h3>Vista Previa Informe</h3><p><strong>Consumo Total:</strong> '+datos.a.tot.toFixed(2)+' kWh</p><p><strong>Equipos:</strong> '+(datos.c.length+datos.e.length+datos.l.length)+'</p><p><strong>USE:</strong> '+datos.a.use.length+'</p></div>';
+    var html = '<div class="card"><h3>Vista Previa del Informe</h3><p><strong>Consumo Total Anual:</strong> '+datos.a.tot.toFixed(2)+' kWh</p><p><strong>Cantidad de Equipos:</strong> '+(datos.c.length+datos.e.length+datos.l.length)+'</p><p><strong>Usos Significativos Identificados:</strong> '+datos.a.use.length+'</p><p>El informe descargable incluirá tablas detalladas, análisis por categoría y recomendaciones.</p></div>';
     document.getElementById('prev').innerHTML = html;
 }
 
 function descargar() {
-    if(!datos.a) {alert('Realiza analisis primero'); return;}
-    var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Informe</title><style>body{font-family:Arial;padding:20px}h1,h2{color:#1a3a8a;border-bottom:2px solid}table{width:100%;border-collapse:collapse}th,td{border:1px solid;padding:10px}th{background:#1a3a8a;color:white}</style></head><body><h1>INFORME AUDITORIA ENERGETICA</h1><h2>Consumo por Categoria</h2><table><tr><th>Categoria</th><th>Consumo Ano</th><th>%</th></tr>';
+    if(!datos.a) {alert('Realiza un análisis primero en el Bloque 4'); return;}
+    var fecha = new Date().toLocaleDateString('es-ES');
+    var html = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe Auditoría Energética</title><style>body{font-family:Arial;line-height:1.6;color:#333;padding:40px;max-width:800px;margin:0 auto}h1,h2{color:#1a3a8a;border-bottom:2px solid #1a3a8a;padding-bottom:10px}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{border:1px solid #999;padding:10px;text-align:left}th{background:#1a3a8a;color:white}tr:nth-child(even){background:#f9f9f9}.page-break{page-break-after:always;margin:40px 0}h3{color:#2c5aa0;margin-top:20px}.equipment{background:#f0f9ff;padding:10px;margin:10px 0;border-left:4px solid #0284c7}.footer{text-align:center;margin-top:40px;border-top:1px solid #ccc;padding-top:20px;font-size:12px;color:#666}</style></head><body>';
+    
+    html += '<div style="text-align:center;margin-bottom:30px;border-bottom:2px solid #1a3a8a;padding-bottom:20px;"><h1>INFORME DE AUDITORÍA ENERGÉTICA</h1><p><strong>Fecha de Generación:</strong> '+fecha+'</p><p><strong>Herramienta:</strong> Sistema de Auditoría Energética Interactivo</p><p><strong>Normativa:</strong> Decreto 158-23</p></div>';
+    
+    html += '<h2>PÁGINA 1: RESUMEN EJECUTIVO</h2>';
+    html += '<h3>1.1 Resumen General</h3><p><strong>Consumo Total Anual:</strong> '+datos.a.tot.toFixed(2)+' kWh</p><p><strong>Consumo Promedio Mensual:</strong> '+(datos.a.tot/12).toFixed(2)+' kWh</p><p><strong>Consumo Promedio Diario:</strong> '+(datos.a.tot/365).toFixed(2)+' kWh</p><p><strong>Total de Equipos Registrados:</strong> '+(datos.c.length+datos.e.length+datos.l.length)+'</p><p><strong>Equipos Identificados como USE:</strong> '+datos.a.use.length+'</p>';
+    
+    html += '<h3>1.2 Consumo por Categoría</h3><table><tr><th>Categoría</th><th>Equipos</th><th>Consumo Anual (kWh)</th><th>% del Total</th></tr>';
     for(var c in datos.a.cat) {
         var d = datos.a.cat[c];
-        var p = (d.a/datos.a.tot*100).toFixed(1);
-        html += '<tr><td>'+c+'</td><td>'+d.a.toFixed(2)+' kWh</td><td>'+p+'%</td></tr>';
+        var pct = (d.a/datos.a.tot*100).toFixed(1);
+        html += '<tr><td><strong>'+c+'</strong></td><td>'+d.c+'</td><td>'+d.a.toFixed(2)+'</td><td>'+pct+'%</td></tr>';
     }
-    html += '<tr style="background:#e0e7ff"><td><strong>TOTAL</strong></td><td><strong>'+datos.a.tot.toFixed(2)+' kWh</strong></td><td>100%</td></tr></table></body></html>';
+    html += '</table>';
+    
+    html += '<h3>1.3 Principales Equipos Consumidores (USE)</h3>';
+    if(datos.a.use.length > 0) {
+        for(var i = 0; i < Math.min(datos.a.use.length, 5); i++) {
+            var eq = datos.a.use[i];
+            var p = (eq.a/datos.a.tot*100).toFixed(1);
+            html += '<div class="equipment"><strong>'+eq.nom+'</strong> ('+eq.area+')<br>Consumo Anual: '+eq.a.toFixed(2)+' kWh ('+p+'% del total)<br>Horas de Operación: '+eq.hor+' horas/día<br>Potencia: '+eq.pot.toFixed(0)+' W</div>';
+        }
+    }
+    
+    html += '<div class="page-break"></div>';
+    html += '<h2>PÁGINA 2: ANÁLISIS DETALLADO</h2>';
+    
+    html += '<h3>2.1 Detalle Completo por Categoría</h3>';
+    for(var c in datos.a.cat) {
+        var d = datos.a.cat[c];
+        html += '<h4>'+c+' (Consumo Anual: '+d.a.toFixed(2)+' kWh)</h4><table style="margin:15px 0;"><tr><th>Equipo</th><th>Cantidad</th><th>Área</th><th>Consumo/año</th><th>% Total</th></tr>';
+        for(var j = 0; j < d.items.length; j++) {
+            var it = d.items[j];
+            var pct = (it.a/datos.a.tot*100).toFixed(2);
+            html += '<tr><td>'+it.nom+'</td><td>'+it.cant+'</td><td>'+it.area+'</td><td>'+it.a.toFixed(2)+' kWh</td><td>'+pct+'%</td></tr>';
+        }
+        html += '</table>';
+    }
+    
+    html += '<h3>2.2 Recomendaciones Energéticas</h3><ul><li>Implementar programa de mantenimiento preventivo de equipos</li><li>Establecer horarios optimizados de operación</li><li>Considerar equipos más eficientes para los USE identificados</li><li>Capacitar al personal en prácticas de eficiencia energética</li><li>Realizar seguimiento trimestral del consumo energético</li><li>Cumplir con los requisitos del Decreto 158-23</li><li>Evaluar la instalación de sistemas de monitoreo automático</li></ul>';
+    
+    html += '<h3>2.3 Beneficios Esperados</h3><p>La implementación de las medidas recomendadas podría resultar en una reducción del consumo energético del 10-20%, lo que se traduce en ahorros económicos significativos y menores impactos ambientales.</p>';
+    
+    html += '<div class="footer"><p>Informe generado automáticamente por el Sistema de Auditoría Energética Interactivo</p><p>Cumplimiento: Decreto 158-23 - Decreto que establece medidas para la eficiencia energética</p></div></body></html>';
     var blob = new Blob([html], {type:'text/html'});
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url;
-    a.download = 'Informe.html';
+    a.download = 'Informe_Auditoria_Energetica_'+fecha.replace(/\//g,'-')+'.html';
     a.click();
 }
 
